@@ -2,7 +2,6 @@ services:
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch-oss:6.8.1
     container_name: elasticsearch
-    entrypoint: /usr/share/elasticsearch/docker-entrypoint-es-plugins.sh
     environment: 
       ES_JAVA_OPTS: "-Xms512m -Xmx512m"
     networks:
@@ -15,7 +14,6 @@ services:
         soft: -1
         hard: -1
     volumes:
-      - ./elasticsearch/config/docker-entrypoint-es-plugins.sh:/usr/share/elasticsearch/docker-entrypoint-es-plugins.sh
       - ./elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
       - elasticsearch-data:/usr/share/elasticsearch/data
       - elasticsearch-plugins:/usr/share/elasticsearch/plugins
