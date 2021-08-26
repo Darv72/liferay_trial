@@ -4,12 +4,12 @@ services:
     container_name: elasticsearch
     entrypoint: /usr/share/elasticsearch/docker-entrypoint-es-plugins.sh
     environment: 
-      ES_JAVA_OPTS: "-Xms512m -Xmx512m"
+      ES_JAVA_OPTS: "-Xms512m -Xmx1024m"
     networks:
-      - fs72sp1
+      - lr73net
     ports:
-      - 9200:9200
-      - 9300:9300
+      - 9400:9200
+      - 9500:9300
     ulimits:
       memlock:
         soft: -1
@@ -23,14 +23,13 @@ services:
     image: mysql:5.7.29
     container_name: mysql
     networks:
-      - fs72sp1
+      - lr73net
     ports:
       - 3307:3306
     environment:
       MYSQL_ROOT_PASSWORD: password
       MYSQL_DATABASE: lportal
     volumes:
-      - ./mysql/config/lportal.sql:/docker-entrypoint-initdb.d/lportal.sql
       - ./mysql/config/my.cnf:/etc/mysql/conf.d/my.cnf
       - mysql:/var/lib/mysql
   tomcat:
@@ -44,7 +43,7 @@ services:
       LIFERAY_RETRY_PERIOD_JDBC_PERIOD_ON_PERIOD_STARTUP_PERIOD_MAX_PERIOD_RETRIES: 10
       LIFERAY_JVM_OPTS: "-Xms2560m -Xmx4096m"
     networks: 
-      - fs72sp1
+      - lr73net
     ports: 
       - 8080:8080
       - 127.0.0.1:11311:11311
@@ -56,8 +55,8 @@ services:
       - liferay-osgi-modules:/opt/liferay/osgi/modules
       - liferay-osgi-war:/opt/liferay/osgi/war
 networks:
-  fs72sp1:
-    name: fs72sp1
+  lr73net:
+    name: lr73net
 volumes:
   elasticsearch-data:
   elasticsearch-plugins:
